@@ -109,7 +109,8 @@ class Parse extends sdk.Parse
 
   @override
   Future<sdk.ParseConnectivityResult> checkConnectivity() async {
-    switch (await Connectivity().checkConnectivity()) {
+    List<ConnectivityResult> conn = await Connectivity().checkConnectivity();
+    switch (conn.first) {
       case ConnectivityResult.wifi:
         return sdk.ParseConnectivityResult.wifi;
       case ConnectivityResult.mobile:
@@ -132,7 +133,7 @@ class Parse extends sdk.Parse
         default:
           return sdk.ParseConnectivityResult.none;
       }
-    });
+    } as sdk.ParseConnectivityResult Function(List<ConnectivityResult> event));
   }
 
   @override
